@@ -5,7 +5,7 @@ services:
 
 
 before_install:
-  - docker build -t mayank/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t [mayank]/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run -e CI=true mayank/react-test npm test
