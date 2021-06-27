@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+
+
+before_install:
+  - docker build -t mayank/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true mayank/react-test npm test
+
+after_success:
+  - docker build -t mayank/multi-client ./client
+  - docker build -t mayank/multi-nginx ./nginx
+  - docker build -t mayank/multi-server ./server
+  - docker build -t mayank/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+
+  - docker push mayank/multi-client
+  - docker push mayank/multi-nginx
+  - docker push mayank/multi-server
+  - docker push mayank/multi-worker
+  
