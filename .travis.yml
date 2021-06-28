@@ -6,7 +6,7 @@ before_install:
   - docker build -t mayank266/test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e mayank266/test npm test
+  - docker run  mayank266/test npm test
 
 after_success:
   - docker build -t mayank266/multi-client ./client
